@@ -69,11 +69,12 @@ function run() {
     };
     let url =
       "https://covid-19-coronavirus-statistics.p.rapidapi.com/v1/total?country=" +
-      name;
+      String(name);
+    console.log(url);
     fetch(url, options)
       .then((response) => response.json())
       .then((response) => {
-        // console.log(response);
+        console.log(response);
         // console.log(response.data.confirmed);
         let confirmed = document.getElementById("confirmed");
         confirmed.innerHTML = Number(response.data.confirmed);
@@ -82,7 +83,7 @@ function run() {
       })
       .catch((err) => console.error(err));
   }
-  setInterval(_get(country.value), 1000);
+  setInterval(_get(namecountry), 1000);
   // confirmed.innerHTML = 10;
   // _get(country.value);
   main.innerHTML = content.innerHTML;
