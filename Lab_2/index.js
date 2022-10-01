@@ -8,7 +8,7 @@ console.log("narr: ", narr);
 //Ex 2
 console.log("Ex 2");
 let arr = [1, 54, 6, 7];
-console.log(arr.map((x) => (x *= 2)));
+console.log(arr.map((x) => (x += 5)));
 
 //Ex 3
 console.log("Ex 3");
