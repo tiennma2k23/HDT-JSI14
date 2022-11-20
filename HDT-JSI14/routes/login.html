@@ -1,0 +1,97 @@
+<link rel="stylesheet" href="../styles/auth.css" />
+
+<div class="auth-container">
+  <div class="auth-model">
+    <div class="auth-header">
+      <p>Login</p>
+    </div>
+
+    <form class="auth-content">
+      <img src="../assets/avatar.png" alt="" />
+
+      <div class="input-group mb-3">
+        <span class="input-group-text" id="basic-addon1">@</span>
+        <input
+          required
+          type="email"
+          class="form-control"
+          placeholder="Email"
+          aria-label="Email"
+          aria-describedby="basic-addon1"
+          id="email"
+          name="email"
+        />
+      </div>
+
+      <div class="input-group mb-3">
+        <span class="input-group-text" id="basic-addon2">
+          <i class="bx bxs-lock-alt"></i>
+        </span>
+        <input
+          minlength="6"
+          maxlength="18"
+          required
+          type="password"
+          class="form-control"
+          placeholder="Password"
+          aria-label="Password"
+          aria-describedby="basic-addon2"
+          id="password"
+          name="password"
+        />
+      </div>
+      <div class="w-100" id="btn-container">
+        <button class="btn btn-primary w-100" type="submit">Sign Up</button>
+      </div>
+
+      <p class="mt-2">
+        Haven't got an account? <a href="#/register">Register</a>
+      </p>
+    </form>
+  </div>
+</div>
+
+<!-- xử lý đăng nhập realtime với firebase -->
+<script type="module">
+  import {
+    signInWithEmailAndPassword,
+    signOut,
+  } from "https://www.gstatic.com/firebasejs/9.12.1/firebase-auth.js";
+  import { auth } from "../firebase.js";
+
+  const form = document.querySelector("form");
+  form.addEventListener("submit", (e) => {
+    e.preventDefault(); // ngăn trình duyệt tự động reload.
+
+    document.querySelector("#btn-container").innerHTML = `
+      <button class = "btn btn-primary w-100" type="button" disabled>
+        <span class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span>
+        <span>Sign In ...</span>
+        </button>
+      `;
+
+    const email = form.email.value.trim();
+    const password = form.password.value;
+
+    signInWithEmailAndPassword(auth, email, password)
+      .then((userCredential) => {
+        const user = userCredential.user;
+        console.log(user);
+        if (!user.emailVerified) {
+          signOut(auth);
+          throw { code: "Email not verified! Ngu", message: "" };
+        }
+      })
+      .catch((error) => {
+        const errorCode = error.code;
+        const errorMessage = error.message;
+        console.log(errorCode, errorMessage);
+        alert(errorCode);
+      })
+      .finally(() => {
+        document.querySelector(
+          "#btn-container"
+        ).innerHTML = `<button class="btn btn-primary w-100" type="submit">Sign In</button>`;
+      });
+  });
+</script>
