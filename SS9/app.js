@@ -38,6 +38,7 @@ class clock {
     return s_time;
   }
   f_stop() {
+    clearInterval(this.s_start);
     this.status = false;
     let phut = document.getElementById("phut" + this.id.toString());
     let giay = document.getElementById("giay" + this.id.toString());
@@ -53,7 +54,7 @@ class clock {
     // if (this.status == true) {
     let phut = document.getElementById("phut" + this.id.toString());
     let giay = document.getElementById("giay" + this.id.toString());
-    let s_start = setInterval(() => {
+    this.s_start = setInterval(() => {
       // console.log(this.id.toString());
       // phut.innerHTML++;
       giay.innerHTML++;
@@ -65,18 +66,18 @@ class clock {
       // let dongho = document.getElementById("dongho" + this.id.toString());
       // dongho.innerHTML = this.hash(n_p, n_s);
     }, 1000);
-    let stop_btn = document.getElementById("stop" + this.id.toString());
-    stop_btn.onclick = () => {
-      clearInterval(s_start);
-      this.status = false;
-      //   let phut = document.getElementById("phut" + this.id.toString());
-      //   let giay = document.getElementById("giay" + this.id.toString());
-      phut.innerHTML = 0;
-      giay.innerHTML = 0;
-    };
+    // let stop_btn = document.getElementById("stop" + this.id.toString());
+    // stop_btn.onclick = () => {
+    //   clearInterval(this.s_start);
+    //   this.status = false;
+    //   //   let phut = document.getElementById("phut" + this.id.toString());
+    //   //   let giay = document.getElementById("giay" + this.id.toString());
+    //   phut.innerHTML = 0;
+    //   giay.innerHTML = 0;
+    // };
     let pause_btn = document.getElementById("pause" + this.id.toString());
     pause_btn.onclick = () => {
-      clearInterval(s_start);
+      clearInterval(this.s_start);
       this.status = false;
       //   let phut = document.getElementById("phut" + this.id.toString());
       //   let giay = document.getElementById("giay" + this.id.toString());
@@ -112,7 +113,7 @@ class clock {
     let stop_btn = document.createElement("button");
     stop_btn.setAttribute("id", "stop" + this.id.toString());
     stop_btn.innerHTML = "Stop";
-
+    stop_btn.onclick = this.f_stop;
     let pause_btn = document.createElement("button");
     pause_btn.setAttribute("id", "pause" + this.id.toString());
     pause_btn.innerHTML = "Pause";

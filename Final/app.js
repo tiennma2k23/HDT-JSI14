@@ -1,0 +1,29 @@
+if (localStorage.getItem("user_active") == null)
+  localStorage.setItem("user_active", 0);
+let searchForm = document.querySelector(".search-form");
+
+document.querySelector("#search-btn").onclick = () => {
+  searchForm.classList.toggle("active");
+  shoppingCart.classList.remove("active");
+  loginForm.classList.remove("active");
+  navbar.classList.remove("active");
+};
+
+let shoppingCart = document.querySelector(".shopping-cart");
+
+document.querySelector("#cart-btn").onclick = () => {
+  shoppingCart.classList.toggle("active");
+  searchForm.classList.remove("active");
+  loginForm.classList.remove("active");
+  navbar.classList.remove("active");
+};
+
+let loginForm = document.querySelector("#login-form");
+
+document.querySelector("#user-btn").onclick = () => {
+  if (localStorage.getItem("user_active") == 0)
+    loginForm.classList.toggle("active");
+  searchForm.classList.remove("active");
+  shoppingCart.classList.remove("active");
+  navbar.classList.remove("active");
+};
