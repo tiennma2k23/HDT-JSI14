@@ -1,6 +1,4 @@
-import { auth, subscriptions } from "./firebase.js";
-
-import { onAuthStateChanged } from "https://www.gstatic.com/firebasejs/9.9.1/firebase-auth.js";
+///import ...
 
 const routes = {
   "/": {
@@ -32,23 +30,19 @@ const routes = {
 
 const isMatchRoute = (route, pathname) => {
   const parsed = route.replace(/\/:[^\/]+/gm, "/[^\\/]+");
-
   const regex = new RegExp(`^${parsed}\\/?$`, "gm");
   const isMatching = regex.test(pathname);
-
   let params = {};
 
   if (isMatching) {
-    const routeMatches = route.match(/\/[^\\\/]+/gm) || [];
-    const pathnameMatches = pathname.match(/\/[^\\\/]+/gm) || [];
-
+    const routeMatches = route.match(/\/:[^\/]+/gm) || [];
+    const pathnameMatches = pathname.match(/\/:[^\/]+/gm) || [];
     for (const [index, routeMatch] of routeMatches.entries()) {
       if (routeMatch.startsWith("/:")) {
         params[routeMatch.slice(2)] = pathnameMatches[index].slice(1);
       }
     }
   }
-
   return { isMatching, params };
 };
 

@@ -1,16 +1,15 @@
-import { getAnalytics } from "https://www.gstatic.com/firebasejs/9.13.0/firebase-analytics.js";
-import { initializeApp } from "https://www.gstatic.com/firebasejs/9.13.0/firebase-app.js";
-import { getAuth } from "https://www.gstatic.com/firebasejs/9.13.0/firebase-auth.js";
-import { getFirestore } from "https://www.gstatic.com/firebasejs/9.13.0/firebase-firestore.js";
-
+import { getAnalytics } from "https://www.gstatic.com/firebasejs/9.12.1/firebase-analytics.js";
+import { getAuth } from "https://www.gstatic.com/firebasejs/9.12.1/firebase-auth.js";
+import { getFirestore } from "https://www.gstatic.com/firebasejs/9.12.1/firebase-firestore.js";
+import { initializeApp } from "https://www.gstatic.com/firebasejs/9.12.1/firebase-app.js";
 const firebaseConfig = {
-  apiKey: "AIzaSyDZmIAibQ9F5Wl69tEMayRrVUFuqmnKXok",
-  authDomain: "ss6demo.firebaseapp.com",
-  projectId: "ss6demo",
-  storageBucket: "ss6demo.appspot.com",
-  messagingSenderId: "840505474583",
-  appId: "1:840505474583:web:1f526ba7daab72b8b96652",
-  measurementId: "G-7H18PEBMMP",
+  apiKey: "AIzaSyCeFhOd852yBEPfwpWznfEpdjgdwCxE-Ck",
+  authDomain: "mindx-blog.firebaseapp.com",
+  projectId: "mindx-blog",
+  storageBucket: "mindx-blog.appspot.com",
+  messagingSenderId: "1027591204225",
+  appId: "1:1027591204225:web:ea7114f55d8ce921110c80",
+  measurementId: "G-0ET9PD22BS"
 };
 
 // Initialize Firebase
@@ -19,3 +18,4 @@ export const analytics = getAnalytics(app);
 export const auth = getAuth(app);
 export const db = getFirestore(app);
 export const subscription = [];
+

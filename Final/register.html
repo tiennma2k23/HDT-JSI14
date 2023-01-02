@@ -1,4 +1,4 @@
-<link rel="stylesheet" href="../styles/auth.css" />
+<link rel="stylesheet" href="./auth.css" />
 
 <div class="auth-container">
   <div class="auth-model">
@@ -7,70 +7,122 @@
     </div>
 
     <form class="auth-content">
-      <img src="./assets/avatar.png" alt="" />
+      <img src="./image/banner-bg.webp" alt="" />
 
       <div class="input-group mb-3">
         <span class="input-group-text" id="basic-addon1">
           <i class="bx bxs-user"></i>
         </span>
-        <input required type="text" class="form-control" placeholder="Username" aria-label="Username"
-          aria-describedby="basic-addon1" id="username" name="username" />
+        <input
+          required
+          type="text"
+          class="form-control"
+          placeholder="Username"
+          aria-label="Username"
+          aria-describedby="basic-addon1"
+          id="username"
+          name="username"
+        />
       </div>
 
       <div class="input-group mb-3">
         <span class="input-group-text" id="basic-addon1">@</span>
-        <input required type="email" class="form-control" placeholder="Email" aria-label="Email"
-          aria-describedby="basic-addon1" id="email" name="email" />
+        <input
+          required
+          type="email"
+          class="form-control"
+          placeholder="Email"
+          aria-label="Email"
+          aria-describedby="basic-addon1"
+          id="email"
+          name="email"
+        />
       </div>
 
       <div class="input-group mb-3">
         <span class="input-group-text" id="basic-addon2">
           <i class="bx bxs-lock-alt"></i>
         </span>
-        <input minlength="6" maxlength="18" required type="password" class="form-control" placeholder="Password"
-          aria-label="Password" aria-describedby="basic-addon2" id="password" name="password" />
+        <input
+          minlength="6"
+          maxlength="18"
+          required
+          type="password"
+          class="form-control"
+          placeholder="Password"
+          aria-label="Password"
+          aria-describedby="basic-addon2"
+          id="password"
+          name="password"
+        />
       </div>
       <div class="w-100" id="btn-container">
         <button class="btn btn-primary w-100" type="submit">Sign Up</button>
       </div>
 
-      <p class="mt-2">Already have an account?<a href="#/login">Login</a></p>
+      <p class="mt-2">
+        Already have an account?<a href="./login.html">Login</a>
+      </p>
     </form>
   </div>
 </div>
 
 <script type="module">
+  const UrlApi = "https://62d4116c5112e98e484a08f4.mockapi.io/api/User";
+
+  const updateById = async (id, newData) => {
+    const res = await fetch(UrlApi + `/${id}`, {
+      method: "PUT",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify(newData),
+    });
+    // console.log(await res.json());
+  };
+  const add = async (data) => {
+    const res = await fetch(UrlApi, {
+      headers: {
+        Accept: "application/json",
+        "Content-Type": "application/json",
+      },
+      method: "POST",
+      body: JSON.stringify(data),
+    });
+    console.log(await res.json());
+  };
+
   import {
     createUserWithEmailAndPassword,
     updateProfile,
     signOut,
     sendEmailVerification,
-  } from "https://www.gstatic.com/firebasejs/9.12.1/firebase-auth.js";
-  import { auth } from "../firebase.js";
+  } from "https://www.gstatic.com/firebasejs/9.13.0/firebase-auth.js";
+  import { auth } from "./firebase.js";
 
   const form = document.querySelector("form");
   form.addEventListener("submit", (event) => {
     event.preventDefault();
 
-    document.querySelector("#btn-container").innerHTML =
-      `
+    document.querySelector("#btn-container").innerHTML = `
     <button class="btn btn-primary w-100" type="button" disable>
       <span class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span>
       <span>Sign Up... </span>
     </button>
-    `
+    `;
 
     const username = form.username.value.trim();
     const email = form.email.value.trim();
     const password = form.password.value;
-
 
     //// Xử lý với firebase authentication
     createUserWithEmailAndPassword(auth, email, password)
       .then(async (userCredential) => {
         const user = userCredential.user;
         console.log(user);
-
+        add({
+          username: username,
+          email: email,
+          product: [],
+        });
         await sendEmailVerification(user);
 
         await updateProfile(auth.currentUser, {
@@ -93,11 +145,9 @@
         alert(errorCode);
       })
       .finally(() => {
-        document.querySelector("#btn-container").innerHTML =
-          `
+        document.querySelector("#btn-container").innerHTML = `
         <button class="btn btn-primary w-100" type="submit">Sign Up</button>
-        `
-      })
-  })
-
+        `;
+      });
+  });
 </script>
