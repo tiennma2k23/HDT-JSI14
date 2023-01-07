@@ -53,6 +53,7 @@
 
 <!-- xử lý đăng nhập realtime với firebase -->
 <script type="module">
+  const UrlApi = "https://62d4116c5112e98e484a08f4.mockapi.io/api/User";
   import {
     signInWithEmailAndPassword,
     signOut,
@@ -76,8 +77,23 @@
     signInWithEmailAndPassword(auth, email, password)
       .then((userCredential) => {
         const user = userCredential.user;
-        window.open("./index.html");
+        console.log(user.displayName);
+        localStorage.setItem("username", user.displayName);
         console.log(user);
+        window.open("./index.html");
+        fetch(UrlApi)
+          .then((result) => result.json())
+          .then((data) => {
+            for (let i = 0; i < data.length; i++) {
+              if (data[i].email == email) {
+                localStorage.setItem("data", JSON.stringify(data[i]));
+                localStorage.setItem("id", data[i].id);
+                break;
+              }
+            }
+            // console.log(data);
+          });
+        // console.log(user);
         if (!user.emailVerified) {
           signOut(auth);
           throw { code: "Email not verified! Ngu", message: "" };
