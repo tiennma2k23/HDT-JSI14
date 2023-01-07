@@ -18,13 +18,31 @@ function abc() {
     let box = document.createElement("div");
     box.setAttribute("class", "box");
     sum += sanpham[type][num].price * sp[i].sl;
-    box.innerHTML = `<i class="fas fa-trash"></i>
-<img src=${sanpham[type][num].urlimg} alt="" />
+
+    // box.innerHTML = <i class="fas fa-trash"></i>;
+    let ii = document.createElement("i");
+    ii.setAttribute("class", "fas fa-trash");
+    ii.setAttribute("id", String(i));
+    ii.addEventListener("click", function (e) {
+      console.log(e.target.id);
+      let data = localStorage.getItem("data");
+      let giohang = JSON.parse(data);
+      let sp = giohang.product;
+      sp.splice(Number(e.target.id), 1);
+      localStorage.setItem("data", JSON.stringify(giohang));
+      abc();
+      updateById(localStorage.id, giohang);
+    });
+    box.append(ii);
+    let abcabc = document.createElement("div");
+    // abcabc.setAttribute("class", "box");
+    abcabc.innerHTML = `<img src=${sanpham[type][num].urlimg} alt="" />
 <div class="content">
   <h3>${sanpham[type][num].name}</h3>
   <span class="price">${sanpham[type][num].price}/-</span>
   <span class="quantity">sl : ${sp[i].sl}</span>
 </div>`;
+    box.append(abcabc);
     shopping_cart.append(box);
   }
   let total = document.createElement("div");
@@ -91,46 +109,39 @@ let sanpham = {
   trangtri: [
     {
       name: "Chuông",
-      urlimg:
-        "http://media.doisongphapluat.com/297/2014/11/23/mon-do-trang-tri-ngay-giang-sinh-2.jpg",
+      urlimg: "./image/chuong.jpg",
       price: 10000,
     },
     {
-      name: "Chuông1",
-      urlimg:
-        "http://media.doisongphapluat.com/297/2014/11/23/mon-do-trang-tri-ngay-giang-sinh-2.jpg",
-      price: 10000,
+      name: "Tất giáng sinh",
+      urlimg: "./image/tatgiangsinh.jpg",
+      price: 20000,
     },
     {
-      name: "Chuông2",
-      urlimg:
-        "http://media.doisongphapluat.com/297/2014/11/23/mon-do-trang-tri-ngay-giang-sinh-2.jpg",
-      price: 10000,
+      name: "Mũ",
+      urlimg: "./image/muagiangsinh.jpg",
+      price: 50000,
     },
     {
-      name: "Chuông3",
-      urlimg:
-        "http://media.doisongphapluat.com/297/2014/11/23/mon-do-trang-tri-ngay-giang-sinh-2.jpg",
+      name: "Quần áo",
+      urlimg: "./image/quanao.jpg",
       price: 10000,
     },
   ],
   thucan: [
     {
-      name: "Đồ ăn 1",
-      urlimg:
-        "http://media.doisongphapluat.com/297/2014/11/23/mon-do-trang-tri-ngay-giang-sinh-2.jpg",
+      name: "Gà tây nướng",
+      urlimg: "./image/ganuong.webp",
       price: 10000,
     },
     {
-      name: "Đồ ăn 2",
-      urlimg:
-        "http://media.doisongphapluat.com/297/2014/11/23/mon-do-trang-tri-ngay-giang-sinh-2.jpg",
+      name: "Bánh kem",
+      urlimg: "./image/banhkem.jpg",
       price: 10000,
     },
     {
-      name: "Đồ ăn 3",
-      urlimg:
-        "http://media.doisongphapluat.com/297/2014/11/23/mon-do-trang-tri-ngay-giang-sinh-2.jpg",
+      name: "Kẹo",
+      urlimg: "./image/keo.jpg",
       price: 10000,
     },
   ],

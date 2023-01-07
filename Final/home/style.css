@@ -894,3 +894,14 @@ section{
     width: 18px;
     margin-right: 10px;
   }
+.shopping-cart
+{
+    background-color: #F5F5F5;
+    float: left;
+    height: 500px;
+    margin-bottom: 25px;
+    margin-left: 22px;
+    margin-top: 40px;
+    width: 100px;
+       overflow-y: scroll;
+}
